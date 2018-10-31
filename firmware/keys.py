@@ -41,4 +41,4 @@ def init_device():
     save_seed_to_disk(seed)
 
 def load_seed_from_disk():
-    return open(SEED_FILE, 'rb').read()
+    return open(SEED_FILE, 'rb').read().strip()

@@ -74,6 +74,7 @@
 import uos
 import tcc
 import keys
+import binascii
 # import display
 import m5stack
 #pylint: enable=import-error
@@ -103,14 +104,20 @@ def boot():
     return seed
 
 def main():
-    tft.text(tft.CENTER, 45, "Hello, world")
-    # if keys.SEED_FILE not in uos.listdir('.'):
-        # init()
-    # seed = boot()
+    if keys.SEED_FILE not in uos.listdir('.'):
+        print("Initializing wallet")
+        init()
+    print("Loading seed")
+    seed = boot()
+    hex_seed = binascii.hexlify(seed)
+    print(hex_seed)
+    counter = 0
+    y = 45
+    while counter < len(hex_seed):
+        tft.text(tft.CENTER, y, hex_seed[counter:counter+20])
+        counter += 20
+        y += 20
     # sign_and_verify(seed)
-
-
-
 
 if __name__ == '__main__':
     main()
