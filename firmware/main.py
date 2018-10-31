@@ -103,12 +103,7 @@ def boot():
     print("read seed from disk")
     return seed
 
-def main():
-    if keys.SEED_FILE not in uos.listdir('.'):
-        print("Initializing wallet")
-        init()
-    print("Loading seed")
-    seed = boot()
+def print_seed(seed):
     hex_seed = binascii.hexlify(seed)
     print(hex_seed)
     counter = 0
@@ -117,6 +112,15 @@ def main():
         tft.text(tft.CENTER, y, hex_seed[counter:counter+20])
         counter += 20
         y += 20
+
+
+def main():
+    if keys.SEED_FILE not in uos.listdir('.'):
+        print("Initializing wallet")
+        init()
+    print("Loading seed")
+    seed = boot()
+    print_seed(seed)
     # sign_and_verify(seed)
 
 if __name__ == '__main__':
