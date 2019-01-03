@@ -17,7 +17,7 @@ watch:
 	find . -name "*.py" | entr -c sh -c 'make sync && make reset'
 
 sync:
-	rshell --port $(PORT) --timing --buffer-size=32 rsync --mirror --verbose ./test  /flash
+	rshell --port $(PORT) --timing --buffer-size=32 rsync --mirror --verbose ./$(folder)  /flash
 
 shell:
 	rshell --port $(PORT) --timing --buffer-size=32
