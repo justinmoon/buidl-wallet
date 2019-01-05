@@ -18,5 +18,5 @@ def main(port, msg):
         print("response: ", res)
 
 if __name__ == "__main__":
-    _, port, msg = sys.argv
+    port = sys.argv[1]
     main(port, msg)
