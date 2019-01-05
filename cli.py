@@ -11,16 +11,9 @@ def read_msg(stream):
     return stream.read(10)
 
 def main(port, msg):
-    with serial.Serial(port) as ser:
-        ser.baudrate = 115200
-        ser.bytesize=serial.EIGHTBITS
-        ser.parity=serial.PARITY_NONE
-        ser.stopbits=serial.STOPBITS_ONE
-        # ser.xonxoff=1
-        # ser.rtscts=0
-        print(ser)
-        print(ser.write(b"abc\n"))
-        print("sent")
+    with serial.Serial(port, baudrate=115200, bytesize=serial.EIGHTBITS, 
+            parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE) as ser:
+        ser.write(b"abc")
         res = ser.read(3)
         print("response: ", res)
 
