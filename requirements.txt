@@ -1,4 +1,7 @@
+adafruit-ampy==1.0.7
+Click==7.0
 pyserial==3.4
+python-dotenv==0.10.1
 pyudev==0.21.0
 rshell==0.0.15
 six==1.11.0
