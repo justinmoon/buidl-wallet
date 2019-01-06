@@ -146,7 +146,7 @@ rshell.pyboard.PyboardError: timeout waiting for first EOF reception
 make: *** [Makefile:29: reset] Error 1
 ```
 
-##### Onable support for SPI TFT displays
+##### On enable support for SPI TFT displays
 
 ```
 ./BUILD.sh -v
