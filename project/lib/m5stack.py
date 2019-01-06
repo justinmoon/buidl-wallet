@@ -15,8 +15,8 @@ M5Stack specific constants and classes.
 
 # pylint: disable=import-error
 import utime as time
-import display
 import machine
+import display
 from uos import sdconfig as uos_sdconfig
 from uos import SDMODE_SPI
 from input import DigitalInput

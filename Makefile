@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-PORT=/dev/ttyUSB0
+PORT=/dev/tty.SLAB_USBtoUART
 
 help:
 	@echo ""

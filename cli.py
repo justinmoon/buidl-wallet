@@ -10,8 +10,8 @@ def read_msg(stream):
     # print(msg_len)
     return stream.read(10)
 
-def main(port, msg):
-    with serial.Serial(port, baudrate=115200, bytesize=serial.EIGHTBITS, 
+def main(port):
+    with serial.Serial(port, baudrate=115200, bytesize=serial.EIGHTBITS,
             parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE) as ser:
         ser.write(b"abc")
         res = ser.read(3)
@@ -19,4 +19,4 @@ def main(port, msg):
 
 if __name__ == "__main__":
     port = sys.argv[1]
-    main(port, msg)
+    main(port)
