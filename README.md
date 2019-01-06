@@ -9,7 +9,7 @@ If you have an m5stack, here are instructions to compile micropython firmware th
 Install these prerequisites: https://github.com/loboris/MicroPython_ESP32_psRAM_LoBo/wiki/build
 
 ```
-git clone git@github.com:justinmoon/MicroPython_ESP32_psRAM_LoBo.git
+git clone --recursive --depth=1 git@github.com:justinmoon/MicroPython_ESP32_psRAM_LoBo.git
 cd MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/
 ./BUILD.sh -v
 ./BUILD.sh -v flash
@@ -24,6 +24,9 @@ make sync
 
 TODO
 Copy this code over: https://github.com/justinmoon/micropython/blob/hd/ports/unix/src/main.py
+
+### Mac users
+* on Makefile change PORT=/dev/ttyUSB0 for PORT=/dev/tty.SLAB_USBtoUART
 
 ### Development Notes
 
@@ -141,4 +144,34 @@ Traceback (most recent call last):
     raise PyboardError('timeout waiting for first EOF reception')
 rshell.pyboard.PyboardError: timeout waiting for first EOF reception
 make: *** [Makefile:29: reset] Error 1
+```
+
+##### Onable support for SPI TFT displays
+
+```
+./BUILD.sh -v
+In file included from /Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/esp32/moddisplay.c:33:0:
+/Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/esp32/moddisplay.c:48:50: error: 'MP_QSTR_display' undeclared here (not in a function)
+     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_display) },
+                                                  ^
+/Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/py/obj.h:93:56: note: in definition of macro 'MP_OBJ_NEW_QSTR'
+ #define MP_OBJ_NEW_QSTR(qst) ((mp_obj_t)((((mp_uint_t)(qst)) << 2) | 2))
+                                                        ^
+/Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/esp32/moddisplay.c:48:38: note: in expansion of macro 'MP_ROM_QSTR'
+     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_display) },
+                                      ^
+/Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/esp32/moddisplay.c:48:5: warning: missing initializer for field 'value' of 'mp_rom_map_elem_t {aka const struct _mp_rom_map_elem_t}' [-Wmissing-field-initializers]
+     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_display) },
+     ^
+In file included from /Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/esp32/moddisplay.c:33:0:
+/Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/py/obj.h:341:18: note: 'value' declared here
+     mp_rom_obj_t value;
+                  ^
+In file included from /Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/esp32/moddisplay.c:33:0:
+/Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/esp32/moddisplay.c:51:23: error: 'MP_QSTR_TFT' undeclared here (not in a function)
+     { MP_OBJ_NEW_QSTR(MP_QSTR_TFT), MP_ROM_PTR(&display_tft_type) },
+                       ^
+/Users/gustavosilva/workstation/MicroPython_ESP32_psRAM_LoBo/MicroPython_BUILD/components/micropython/py/obj.h:93:56: note: in definition of macro 'MP_OBJ_NEW_QSTR'
+ #define MP_OBJ_NEW_QSTR(qst) ((mp_obj_t)((((mp_uint_t)(qst)) << 2) | 2))
+
 ```
