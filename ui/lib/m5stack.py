@@ -102,4 +102,3 @@ class Display(object):
         tft.font(tft.FONT_Small, fixedwidth=True)
 
         return tft
-
