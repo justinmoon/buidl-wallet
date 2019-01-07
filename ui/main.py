@@ -12,54 +12,89 @@ AVAILABLE_STEPS = [
 ]
 
 AVAILABLE_MNEMONICS = {
-    12: 'together strong topple gown hospital people pig spend sport sweet choose solve'
-    15: 'faint outer guitar switch ugly short dolphin cross print slogan permit mail object chief rally'
-    18: 'when pool song man agree when hair ring undo weapon art number phone recycle journey drill word inherit'
-    21: 'problem soccer valve sudden tribe crane legal notable fee fish find junior walk firm bench alpha pudding resemble actor security trade'
-    24: 'tonight slim actress bargain wrestle debris warfare flight switch hero forget flip exercise put retire screen organ wisdom sick banner bench mask key identify'
+    '12': 'together strong topple gown hospital people pig spend sport sweet choose solve',
+    '18': 'when pool song man agree when hair ring undo weapon art number phone recycle journey drill word inherit',
+    '24': 'tonight slim actress bargain wrestle debris warfare flight switch hero forget flip exercise put retire screen organ wisdom sick banner bench mask key identify',
 }
 
 active_step = 0
 num_words_index = 0
 
-m5stack.ButtonC(callback=lambda pin, pressed: increase_num_words()))
+# print functions
+
+def print_title(text):
+    tft.text(tft.CENTER, 20, text)
+
+def print_line_1(text):
+    tft.text(tft.CENTER, 50, text)
+
+def print_line_2(text):
+    tft.text(tft.CENTER, 70, text)
+
+def print_line_3(text):
+    tft.text(tft.CENTER, 90, text)
+
+def print_button_a(text):
+    tft.text(40, 208, text)
+
+def print_button_b(text):
+    tft.text(tft.CENTER, 208, text)
+
+def print_button_c(text):
+    tft.text(235, 208, text)
+
+
+def button_handler_a(pin, pressed):
+    # if button was released
+    if pressed is False:
+        next_step()
+        print("Button A pressed")
+
+def button_handler_b(pin, pressed):
+    # if button was released
+    if pressed is False:
+        next_step()
+        print("Button B pressed")
+
+def button_handler_c(pin, pressed):
+    # if button waas released
+    if pressed is False:
+        next_step()
+        print("Button C pressed")
 
 def next_step():
-    if active_step < 4:
-        active_step += 1
-        print(AVAILABLE_STEPS[active_step])
+    global active_step
+    active_step += 1
+    print(active_step)
 
-def increase_num_words():
-    if num_words_index < 5:
-        num_words_index += 1
-        print(AVAILABLE_NUM_WORDS[num_words_index])
-
-def decrease_num_words():
-    if num_words_index > 0:
-        num_words_index -= 1
-        print(AVAILABLE_NUM_WORDS[num_words_index])
+# set the buttons events
+m5stack.ButtonA(callback=button_handler_a)
+m5stack.ButtonB(callback=button_handler_b)
+m5stack.ButtonC(callback=button_handler_c)
 
 
 def select_entropy():
-    m5stack.lcd.clear()
-    tft.text(tft.CENTER, 45, "Choose the number of words in the mnemonice")
-    tft.text(tft.CENTER, 65, "Press A to increase")
-    tft.text(tft.CENTER, 65, "Press B to decrease")
-    tft.text(tft.CENTER, 65, "Press C to continue")
+    print_line_1("Choose mnemonic words")
+    print_button_a('12 words')
+    print_button_b('18 words')
+    print_button_c('24 words')
 
-    m5stack.ButtonA(callback=lambda pin, pressed: increase_num_words()))
-    m5stack.ButtonB(callback=lambda pin, pressed: increase_num_words()))
 
-    while active_step == 0:
-        pass
+def clean_screen():
+    clear = '               '
+    print_line_1(clear)
+    print_line_2(clear)
+    print_line_3(clear)
+    print_button_a(clear)
+    print_button_b(clear)
+    print_button_c(clear)
+
 
 def main():
-    tft.text(tft.CENTER, 45, "Welcome to the buidl wallet!")
-    tft.text(tft.CENTER, 45, "Press A to continue.")
+    print_title("Welcome to the buidl wallet!")
 
     # choose the entropy
     num_words = select_entropy()
-    print(num_words)
 
     # generate the mnemonic (entropy)
 
