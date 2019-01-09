@@ -1,15 +1,13 @@
 import m5stack
+import time
 
 tft = m5stack.Display()
 
-AVAILABLE_NUM_WORDS = [12, 15, 18, 21, 24]
-AVAILABLE_STEPS = [
-    'choose mnemonic words number',
-    'generate mnemonic',
-    'guess the 5th word',
-    'display menu',
-    'continue'
-]
+CHOOSE_MNEMONIC_STEP = 0
+GENERATE_MNEMONIC_STEP = 1
+GUESS_WORD_STEP = 2
+DISPLAY_MENU_STEP = 2
+END_STEP = 3
 
 AVAILABLE_MNEMONICS = {
     '12': 'together strong topple gown hospital people pig spend sport sweet choose solve',
@@ -17,8 +15,9 @@ AVAILABLE_MNEMONICS = {
     '24': 'tonight slim actress bargain wrestle debris warfare flight switch hero forget flip exercise put retire screen organ wisdom sick banner bench mask key identify',
 }
 
-active_step = 0
 num_words_index = 0
+mnemonic = 0
+lock = True
 
 # print functions
 
@@ -63,9 +62,8 @@ def button_handler_c(pin, pressed):
         print("Button C pressed")
 
 def next_step():
-    global active_step
-    active_step += 1
-    print(active_step)
+    global lock
+    lock = False
 
 # set the buttons events
 m5stack.ButtonA(callback=button_handler_a)
@@ -74,11 +72,23 @@ m5stack.ButtonC(callback=button_handler_c)
 
 
 def select_entropy():
+    clean_screen()
     print_line_1("Choose mnemonic words")
     print_button_a('12 words')
     print_button_b('18 words')
     print_button_c('24 words')
 
+def generate_mnemonic():
+    pass
+
+def guess_word():
+    pass
+
+def display_menu():
+    pass
+
+def save():
+    pass
 
 def clean_screen():
     clear = '               '
@@ -91,19 +101,31 @@ def clean_screen():
 
 
 def main():
-    print_title("Welcome to the buidl wallet!")
+    active_step = 0
 
-    # choose the entropy
-    num_words = select_entropy()
+    available_steps = {
+        CHOOSE_MNEMONIC_STEP: select_entropy(),
+        GENERATE_MNEMONIC_STEP: generate_mnemonic(),
+        GUESS_WORD_STEP: guess_word(),
+        DISPLAY_MENU_STEP: display_menu(),
+        END_STEP: save()
+    }
 
-    # generate the mnemonic (entropy)
+    global lock
 
-    # guess the 5th word
+    while True:
+        lock = True
+        available_steps[active_step]
 
-    # display menu
+        while lock:
+            time.sleep_ms(500)
 
-    # user cli.py to sign a transtion
+        # after unlock go to next step
+        active_step += 1
+        print(active_step)
+
 
 
 if __name__ == '__main__':
+    print_title("Welcome to the buidl wallet!")
     main()
