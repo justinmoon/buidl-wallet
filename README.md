@@ -1,12 +1,10 @@
 # BUIDL Wallet
 
-# TODOS
-* I had to toggle the .endswith condition on line 193ish of /home/justin/dev/buidl-wallet/venv/lib/python3.7/site-packages/rshell/pyboard.py
-    * I was getting b'raw REPL; CTRL-B to exit\r\n>' instead of b'raw REPL; CTRL-B to exit\r\n' (caret at end)
-
 If you have an m5stack, here are instructions to compile micropython firmware that includes all of Trezor's crypto code available as Python objects:
 
 Install these prerequisites: https://github.com/loboris/MicroPython_ESP32_psRAM_LoBo/wiki/build
+
+Build the custom Micropython firmware that includes trezor-crypto bindings:
 
 ```
 git clone --recursive --depth=1 git@github.com:justinmoon/MicroPython_ESP32_psRAM_LoBo.git
@@ -22,9 +20,6 @@ python3 -m pip install rshell
 make sync
 ```
 
-TODO
-Copy this code over: https://github.com/justinmoon/micropython/blob/hd/ports/unix/src/main.py
-
 ### Mac users
 * on Makefile change PORT=/dev/ttyUSB0 for PORT=/dev/tty.SLAB_USBtoUART
 
@@ -35,6 +30,12 @@ Copy this code over: https://github.com/justinmoon/micropython/blob/hd/ports/uni
 * `ctrl-a-d` will exit the repl
 
 ### Bugs
+
+# TODOS
+* I had to toggle the .endswith condition on line 193ish of /home/justin/dev/buidl-wallet/venv/lib/python3.7/site-packages/rshell/pyboard.py
+    * I was getting b'raw REPL; CTRL-B to exit\r\n>' instead of b'raw REPL; CTRL-B to exit\r\n' (caret at end)
+* Copy this code over: https://github.com/justinmoon/micropython/blob/hd/ports/unix/src/main.py
+
 
 ##### failed to access /dev/ttyUSB0
 

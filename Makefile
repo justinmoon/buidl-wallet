@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := help
 
+#PORT=/dev/tty.SLAB_USBtoUART
 PORT=/dev/ttyUSB0
 
 help:
