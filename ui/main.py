@@ -1,20 +1,23 @@
 import m5stack
 import time
+import tcc
 
 tft = m5stack.Display()
 
+SEED_FILE = "seed.txt"
 
 DEMO_MNEMONIC = ['tonight', 'slim', 'actress', 'bargain', 'wrestle', 'debris', 'warfare', 'flight', 'switch', 'hero', 'forget', 'flip', 'exercise', 'put', 'retire', 'screen', 'organ', 'wisdom', 'sick', 'banner', 'bench', 'mask', 'key', 'identify']
 
 mnemonic = ''
+seed = ''
 lock = True
 
 # Wallet generation
 GENERATE_MNEMONIC_STEP = 0
 SHOW_MNEMONIC_STEP = 1
-GUESS_WORD_STEP = 2
+SHOW_SEED_STEP = 2
+SAVE_SEED_STEP = 3
 DISPLAY_MENU_STEP = 4
-END_STEP = 4
 
 active_step = GENERATE_MNEMONIC_STEP
 
@@ -70,6 +73,8 @@ def button_handler_c(pin, pressed):
             unlock()
         elif active_step == SHOW_MNEMONIC_STEP:
             unlock()
+        elif active_step == SHOW_SEED_STEP:
+            unlock()
 
         print("Button C pressed")
 
@@ -97,15 +102,28 @@ def show_mnemonic():
 
     display_buttons('', '', 'Done')
 
-def save():
-    pass
+def save_seed():
+    open(SEED_FILE, "wb").write(seed)
+    tft.clear()
+    display_title("Saved!")
+    display_buttons('', '', 'Menu')
+
 
 def menu():
     pass
 
-def guess_word():
+def show_seed():
     tft.clear()
-    display_content(["WORK IN PROGRESS"])
+    global seed
+
+    display_title("Generated seed:")
+    passphrase = ""
+    seed = tcc.bip39.seed(' '.join(mnemonic), passphrase)
+
+    contents = ["".join( chr(x) for x in seed)]
+    display_content(contents)
+
+    display_buttons('', '', 'Save')
 
 def main():
     global active_step
@@ -113,9 +131,9 @@ def main():
     available_steps = {
         GENERATE_MNEMONIC_STEP: generate_mnemonic,
         SHOW_MNEMONIC_STEP: show_mnemonic,
-        GUESS_WORD_STEP: guess_word,
+        SHOW_SEED_STEP: show_seed,
+        SAVE_SEED_STEP: save_seed,
         DISPLAY_MENU_STEP: menu,
-        END_STEP: save
     }
 
     global lock
