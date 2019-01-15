@@ -1,5 +1,7 @@
+import urandom
 import m5stack
 import time
+import tcc
 
 tft = m5stack.Display()
 
@@ -17,6 +19,22 @@ DISPLAY_MENU_STEP = 4
 END_STEP = 4
 
 active_step = GENERATE_MNEMONIC_STEP
+
+################
+# Wallet Stuff #
+################
+
+
+def entropy(n: int):
+    # TODO: hardware RNG
+    return bytes([urandom.getrandbits(8) for _ in range(n)])
+
+def init():
+    data = entropy(32)
+    print("bip39 entropy=", data)
+    mnemonic = tcc.bip39.from_data(data)
+    print("mnemonic=", mnemonic)
+    return mnemonic
 
 def display_title(text):
     tft.text(tft.CENTER, 20, text)
@@ -36,7 +54,6 @@ def unlock():
     global lock
     lock = False
     print('unlocking')
-    print(lock)
 
 def set_mnemonic(val):
     global mnemonic
@@ -46,7 +63,9 @@ def button_handler_a(pin, pressed):
     # if button was pressed
     if pressed is True:
         if active_step == GENERATE_MNEMONIC_STEP:
-            set_mnemonic(DEMO_MNEMONIC[:12])
+            print(1)
+            set_mnemonic(init())
+            print(2)
             unlock()
 
         print("Button A pressed")
@@ -54,17 +73,16 @@ def button_handler_a(pin, pressed):
 
 def button_handler_b(pin, pressed):
     # if button was released
-    if pressed is False:
+    if pressed is True:
         if active_step == GENERATE_MNEMONIC_STEP:
             set_mnemonic(DEMO_MNEMONIC[:18])
             unlock()
-
 
         print("Button B pressed")
 
 def button_handler_c(pin, pressed):
     # if button was released
-    if pressed is False:
+    if pressed is True:
         if active_step == GENERATE_MNEMONIC_STEP:
             set_mnemonic(DEMO_MNEMONIC)
             unlock()
@@ -92,7 +110,8 @@ def show_mnemonic():
 
     # 4 words at a time
     # TODO: print columns, number words
-    contents = [' '.join(mnemonic[4*i:4*i+4]) for i in range(6) ]
+    # contents = [' '.join(mnemonic[4*i:4*i+4]) for i in range(6) ]
+    contents = mnemonic.split()
     display_content(contents)
 
     display_buttons('', '', 'Done')
@@ -125,11 +144,11 @@ def main():
         available_steps[active_step]()
 
         while lock:
-            time.sleep_ms(500)
+            time.sleep_ms(100)
 
         # after unlock go to next step
         active_step += 1
-        print(active_step)
+        print("active step: ", active_step)
 
 if __name__ == '__main__':
     display_title("Welcome to the buidl wallet!")
