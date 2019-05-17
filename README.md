@@ -26,6 +26,21 @@ make sync
 * `ctrl-d` will restart the device
 * `ctrl-a-d` will exit the repl
 
+### Serial demo
+
+Plug wires into the usb-to-uart:
+- rx <-> 17
+- tx <-> 16
+- gnd <-> gnd
+
+(note: rx & tx criss-cross)
+
+On host machine run `cli.py <port>`
+
+Sync `make folder=serial sync`
+
+The m5stack should start printing first 256 bytes every second
+
 ### Bugs
 
 # TODOS
