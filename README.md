@@ -143,3 +143,10 @@ Traceback (most recent call last):
 rshell.pyboard.PyboardError: timeout waiting for first EOF reception
 make: *** [Makefile:29: reset] Error 1
 ```
+
+
+# 2019 notes
+
+This will show the ports:
+
+python -m serial.tools.list_ports
