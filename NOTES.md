@@ -12,4 +12,4 @@ cool unrelated esp32 tutorial: https://learn.sparkfun.com/tutorials/micropython-
 
 This says I need a usb-to-uart driver: https://titech-aos.github.io/tutorial_en.html#installing-usb-uart-driver
 
-
+CROSS THE WIRES!!! Connect tx<->rx and rx<->tx
