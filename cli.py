@@ -1,6 +1,12 @@
 import sys
 import serial
 
+
+def make_ser(port):
+    return serial.Serial(port, baudrate=115200, bytesize=serial.EIGHTBITS,
+            parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+
+
 def send_msg(ser, data):
     msg = int.to_bytes(len(data), 4, 'little') + data
     return ser.write(msg)
@@ -17,6 +23,14 @@ def main(port):
         res = ser.read(3)
         print("response: ", res)
 
-if __name__ == "__main__":
-    port = sys.argv[1]
-    main(port)
+# def main(port):
+    # with serial.Serial(port, baudrate=115200, bytesize=serial.EIGHTBITS,
+            # parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE) as ser:
+        # ser.write(b"abc")
+        # while True:
+            # print("response: ", ser.read(1))
+
+
+# if __name__ == "__main__":
+    # port = sys.argv[1]
+    # main(port)

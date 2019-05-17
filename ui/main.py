@@ -2,6 +2,7 @@ import urandom
 import m5stack
 import time
 import tcc
+import machine
 
 tft = m5stack.Display()
 
@@ -152,4 +153,4 @@ def main():
 
 if __name__ == '__main__':
     display_title("Welcome to the buidl wallet!")
-    main()
+    # main()
